@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar'; // barra de estados
 import { Component } from 'react'; // Componente
-import { StyleSheet, Text, View, Button, Switch, TextInput, Alert} from 'react-native'; // Componente view
+import { StyleSheet, View, Text, Button, Switch, TextInput, Alert} from 'react-native'; // Componente view
 
 export default class App extends Component { // Componente principal de la app
   constructor(props) {
@@ -29,26 +29,26 @@ export default class App extends Component { // Componente principal de la app
     console.warn('Presionaste un boton');
   }
 
+  showAlert () {
+    Alert.alert(
+      'Angeles',
+      `${this.state.textValue}`,
+      [
+        {text: 'OK', onPress: () => console.log('OK Pressed')},
+      ]
+    );
+  }
   
-  showAlert = () =>
-  Alert.alert(
-    'Alert Title',
-    'My Alert Msg',
-    [
-      {text: 'OK', onPress: () => console.log('OK Pressed')},
-    ]
-);
-
 
   render() {
     return (
-      <View style={styles.container}> {/* Unicamente se puede tener un componente padre */}
+      <View style={styles.container}>
         <Button
           /*onPress={this.onPressLearnMore}*/
+          onPress={this.showAlert.bind(this)}
           title="Learn More"
           color="#841584"
           accessibilityLabel="Learn more about this purple button"
-          onPress={this.showAlert}
         />
 
         <Switch
@@ -62,7 +62,6 @@ export default class App extends Component { // Componente principal de la app
           value = {this.state.textValue}
         />
 
-        {/* <Text>Open up App.js to start working on your app!</Text> */}
         <StatusBar style="auto" />
       </View>
     );
