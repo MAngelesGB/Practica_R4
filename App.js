@@ -8,7 +8,7 @@ const scenes = Actions.create(
   </Scene>
 )
 
-export default class App extends Component {
+export default class App extends Component {true
   render() {
     return <Router scenes={scenes}/>
   }
