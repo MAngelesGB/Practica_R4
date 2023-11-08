@@ -9,7 +9,9 @@ export default class LoginView extends Component { // Componente principal de la
     super(props)
     this.state = {
       textEmailValue: '',
+      textUsernameValue: '',
       textPasswordValue: '',
+      textConfirmPasswordValue: '',
     }
   }
 
@@ -19,7 +21,11 @@ export default class LoginView extends Component { // Componente principal de la
     const emailValid = validationEmail(email)
 
     if(!emailValid)
-      return 'El formato de su correo es incorrecto'
+      return true
+  }
+
+  onChangeTextInputUsername = (username) => {
+    this.setState({textUsernameValue: username})
   }
 
   
@@ -29,35 +35,47 @@ export default class LoginView extends Component { // Componente principal de la
     const passwordValid = validationPassword(password)
 
     if(!passwordValid)
-      return 'La contraseña debe tener almenos 8 caracteres mayúsculas y mínusculas y un caracter especial'
+      return true
   }
-  
-  textEmpty = (email,password) => {
-    return validationEmpty(email)||validationEmpty(password)
+
+  onChangeTextInputConfirmPassword = (Confirmpassword) => {
+    this.setState({textConfirmPasswordValue: Confirmpassword})
+
+    if(this.state.textPasswordValue!=Confirmpassword)
+      return true
+    
+  }
+    
+  textEmpty = (email,password,userName,Confirmpassword) => {
+    return validationEmpty(email)||validationEmpty(password)||validationEmpty(userName)||validationEmpty(Confirmpassword)
   }
 
   showAlert () {
     const mesageEmail = this.onChangeTextInputEmail(this.state.textEmailValue)
     const messagePassword = this.onChangeTextInputPassword(this.state.textPasswordValue)
-    if(mesageEmail||messagePassword)
-      Alert.alert('Información errónea',mesageEmail||messagePassword);
+    const messageConfirmPassword = this.onChangeTextInputConfirmPassword(this.state.textConfirmPasswordValue)
+    if(mesageEmail||messagePassword||messageConfirmPassword)
+      Alert.alert('Información errónea', 'Porfavor revise la información ingresada');
     else
-    Actions.register()
+    Actions.login()
   }
 
   render() {
     return (
       <View style={styles.container}>
-        <Image
-          style={styles.img_rock}
-          source={require('../assets/rock.jpg')} 
-        />
         
         <Text style={styles.text}>Email</Text>
         <TextInput 
           style={styles.input}
           onChangeText={(text)=> this.onChangeTextInputEmail(text)}
           value = {this.state.textEmailValue}
+        />
+
+        <Text style={styles.text}>User name</Text>
+        <TextInput 
+          style={styles.input}
+          onChangeText={(text)=> this.onChangeTextInputUsername(text)}
+          value = {this.state.textUsernameValue}
         />
 
         <Text style={styles.text}>Password</Text>
@@ -69,11 +87,20 @@ export default class LoginView extends Component { // Componente principal de la
           value = {this.state.textPasswordValue}
         />
 
+        <Text style={styles.text}>Confirm password</Text>
+        <TextInput 
+          style={styles.input}
+          autoCapitalize='none'
+          secureTextEntry={true}
+          onChangeText={(text)=> this.onChangeTextInputConfirmPassword(text)}
+          value = {this.state.textConfirmPasswordValue}
+        />
+      
         <Button
           onPress={this.showAlert.bind(this)}
-          title="Login"
+          title="Register"
           color="#BCAAA4"
-          disabled={this.textEmpty(this.state.textEmailValue,this.state.textPasswordValue)}
+          disabled={this.textEmpty(this.state.textEmailValue,this.state.textPasswordValue, this.state.textUsernameValue, this.state.textConfirmPasswordValue)}
           accessibilityLabel="Learn more about this purple button"
         />
 
