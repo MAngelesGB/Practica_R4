@@ -42,7 +42,7 @@ export default class LoginView extends Component { // Componente principal de la
     if(mesageEmail||messagePassword)
       Alert.alert('Información errónea',mesageEmail||messagePassword);
     else
-    Actions.register()
+    Actions.home()
   }
 
   render() {
