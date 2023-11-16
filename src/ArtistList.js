@@ -23,7 +23,7 @@ export default class ArtistList extends Component{
     this.updateDataSource(this.props.artists);
   }
 
-  componentWillReceiveProps(newProps){
+  UNSAFE_componentWillReceiveProps(newProps){
     if(newProps.artists !== this.props.artists){
       this.updateDataSourse(newProps.artists)
     }
